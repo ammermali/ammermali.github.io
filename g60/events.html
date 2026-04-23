@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-60 // Event Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --text-light: #f0f0f0;
+            --accent: #ccff00; /* Neon Yellow/Green */
+            --accent-secondary: #ff0055; /* Neon Pink */
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        /* Navigazione */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(5, 5, 5, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-secondary);
+        }
+
+        /* Page Header */
+        .page-header {
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            background-image: radial-gradient(circle at 50% 100%, #1a1a1a 0%, transparent 60%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.02) 2px,
+                rgba(255, 255, 255, 0.02) 4px
+            );
+            pointer-events: none;
+        }
+
+        .status-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-secondary);
+            border: 1px solid var(--accent-secondary);
+            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        /* Events Feed */
+        .events-feed {
+            padding: 4rem 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .alert-box {
+            border: 1px dashed var(--accent);
+            padding: 2rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            background: rgba(204, 255, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .event-card {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            position: relative;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 0%;
+            background-color: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .event-card:hover::before {
+            height: 100%;
+        }
+
+        .event-card:hover {
+            background-color: #0f0f0f;
+            transform: translateX(5px);
+        }
+
+        .event-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .event-meta .date {
+            color: var(--accent);
+        }
+
+        .event-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .event-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+
+        .event-desc {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+        }
+
+        .btn {
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-light);
+        }
+
+        /* Past Events */
+        .event-card.archived {
+            opacity: 0.7;
+        }
+
+        .event-card.archived::before {
+            background-color: var(--border-color);
+        }
+
+        .event-card.archived .event-meta .date {
+            color: var(--accent-secondary);
+        }
+
+        .event-card.archived:hover {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5%;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: #555;
+            text-transform: uppercase;
+            margin-top: 4rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .event-card { padding: 2rem 1.5rem; }
+            .event-title { font-size: 1.8rem; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">G-60<span>_</span></a>
+        <div class="nav-links">
+            <a href="index.html">[Torna_alla_Root]</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="status-badge">Module: Events // Sync: Active</div>
+        <h1>Event Log</h1>
+    </header>
+
+    <section class="events-feed">
+        
+        <div class="alert-box">
+            > NESSUN EVENTO IMMINENTE IN PROGRAMMAZIONE.<br>
+            > IN ATTESA DI NUOVE DIRETTIVE DAL CONSIGLIO...
+        </div>
+
+        <div class="event-card archived">
+            <div class="event-meta">
+                <span class="date">[Inizializzazione]</span> // 
+                <span class="location">LOC: Dada Zen, Camerino (MC)</span> //
+                <span class="status">STATUS: ARCHIVED</span>
+            </div>
+            <h2 class="event-title">HYPERPULVI</h2>
+            <div class="event-tags">
+                <span class="tag">Audio</span>
+                <span class="tag">Experience</span>
+                <span class="tag">DJ Set</span>
+            </div>
+            <p class="event-desc">Il nostro punto zero. Un'esperienza immersiva tra musica alternativa, meme e Minecraft PvP. Il primo test pubblico che ha dato vita al network G-60. Purtroppo in collaborazione con ESN.</p>
+            <a href="#" class="btn btn-secondary">Esplora Archivio</a>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>G-60 &copy; 2026 // No Entry // All Art Preserved</p>
+    </footer>
+
+</body>
+</html>

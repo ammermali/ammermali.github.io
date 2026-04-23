@@ -255,12 +255,38 @@
             .manifesto { grid-template-columns: 1fr; gap: 2rem; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
         }
+		
+		.nav-links {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-secondary);
+        }
+        
+        /* Aggiungiamo anche una piccola regola per le card cliccabili */
+        a.grid-item {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo">G-60<span>_</span></a>
+	<nav>
+        <a href="index.html" class="logo">G-60<span>_</span></a>
+        <div class="nav-links">
+            <a href="eventi.html">[Event_Log]</a>
+        </div>
     </nav>
 
     <header class="hero">
@@ -310,10 +336,11 @@
                 <h3>Audio Lab</h3>
                 <p>// Sound design, tracce originali, synth sperimentali.</p>
             </div>
-            <div class="grid-item">
+			<a href="events.html" class="grid-item">
                 <h3>Eventi</h3>
                 <p>// Organizzazione di eventi alternativi. Non aspettarti la solita serata convenzionale. Tieniti pronto.</p>
-            </div>
+                <div style="margin-top: 2rem; font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--accent);">> ACCEDI AI LOG</div>
+            </a>
         </div>
     </section>
 

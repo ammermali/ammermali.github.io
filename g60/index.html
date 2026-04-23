@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-60</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --text-light: #f0f0f0;
+            --accent: #ccff00; /* Neon Yellow/Green */
+            --accent-secondary: #ff0055; /* Neon Pink */
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        /* Navigazione */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(5, 5, 5, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, transparent 60%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.02) 2px,
+                rgba(255, 255, 255, 0.02) 4px
+            );
+            pointer-events: none;
+        }
+
+        .status-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-secondary);
+            border: 1px solid var(--accent-secondary);
+            padding: 0.3rem 0.8rem;
+            display: inline-block;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        h1 span {
+            -webkit-text-stroke: 1px var(--text-light);
+            color: transparent;
+        }
+
+        .hero-desc {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: #999;
+            margin-bottom: 3rem;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: white;
+            box-shadow: 4px 4px 0 var(--accent-secondary);
+            transform: translate(-2px, -2px);
+        }
+
+        /* Manifesto / No Entry Section */
+        .manifesto {
+            padding: 8rem 5%;
+            border-top: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+        }
+
+        .manifesto-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .manifesto-text p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+
+        .highlight {
+            color: var(--accent);
+        }
+
+        .alert-box {
+            border: 1px dashed var(--accent-secondary);
+            padding: 2rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+            background: rgba(255, 0, 85, 0.05);
+        }
+
+        /* Melting Pot Grid */
+        .melting-pot {
+            padding: 5rem 5%;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1px;
+            background-color: var(--border-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .grid-item {
+            background-color: var(--bg-dark);
+            padding: 3rem 2rem;
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-item:hover {
+            background-color: #111;
+        }
+
+        .grid-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 0%;
+            background-color: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .grid-item:hover::before {
+            height: 100%;
+        }
+
+        .grid-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .grid-item p {
+            color: #888;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5%;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .manifesto { grid-template-columns: 1fr; gap: 2rem; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">G-60<span>_</span></a>
+    </nav>
+
+    <header class="hero">
+        <div class="status-badge">System: Online // Access: Read-Only</div>
+        <h1>G-60</h1>
+        <p class="hero-desc">
+			Melting pot artistico. Sviluppo, fotografia, video, musica, eventi. 
+			Questo è il nostro archivio pubblico.
+        </p>
+        <div class="cta-container">
+            <a href="#progetti" class="btn btn-primary">Esplora i Lavori</a>
+        </div>
+    </header>
+
+    <section class="manifesto">
+        <div class="manifesto-title">
+            Protocollo<br>Zero.
+        </div>
+        <div class="manifesto-text">
+            <p>Non siamo un'associazione culturale tradizionale. <span class="highlight">Non puoi iscriverti. Non ci sono tessere da compilare.</span></p>
+            <p>La G-60 è una realtà chiusa, una rete di creativi che usa questo spazio come tela condivisa per pubblicare e contaminare le proprie opere.</p>
+            
+            <div class="alert-box">
+                > ACCESSO NEGATO AL TESSERAMENTO.<br>
+                > LA FRUIZIONE DELLE OPERE È APERTA A TUTTI.<br>
+                > SEGUI I NOSTRI EVENTI ALTERNATIVI.
+            </div>
+        </div>
+    </section>
+
+    <section id="progetti" class="melting-pot">
+        <div class="section-header">
+            <h2 class="manifesto-title">Melting Pot</h2>
+            <div style="font-family: 'Space Mono', monospace; color: var(--accent);">[Directory_Root]</div>
+        </div>
+        
+        <div class="grid">
+            <div class="grid-item">
+                <h3>Game Dev</h3>
+                <p>// Le nostre radici.</p>
+            </div>
+            <div class="grid-item">
+                <h3>Visuals</h3>
+                <p>// Fotografia, glitch art, illustrazioni digitali.</p>
+            </div>
+            <div class="grid-item">
+                <h3>Audio Lab</h3>
+                <p>// Sound design, tracce originali, synth sperimentali.</p>
+            </div>
+            <div class="grid-item">
+                <h3>Eventi</h3>
+                <p>// Organizzazione di eventi alternativi. Non aspettarti la solita serata convenzionale. Tieniti pronto.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>G-60 &copy; 2025 // No Entry // All Art Preserved</p>
+    </footer>
+
+</body>
+</html>
